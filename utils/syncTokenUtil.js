@@ -166,22 +166,31 @@ class syncTokenUtils {
    */
   async updateProjectToken(accessToken, oauthData, projectData) {
     for (let i = 0; i < projectData.env.length; i++) {
-      if (projectData.env[i]._id == oauthData.env_id || projectData.env[i]._id.toString() == oauthData.env_id.toString()) {
+      if (projectData.env[i]._id === oauthData.env_id || projectData.env[i]._id.toString() === oauthData.env_id.toString()) {
         let newItem = {
           name: oauthData.token_header,
           value: accessToken
         };
-
         //更新或者插入这个header
         let updateFlag = false;
-        for (
-          let j = 0, len = projectData.env[i]['header'].length;
-          j < len;
-          j++
-        ) {
-          if (projectData.env[i]['header'][j]['name'] == newItem.name) {
+        for (let j = 0, len = projectData.env[i]['header'].length; j < len; j++) {
+          if (projectData.env[i]['header'][j]['name'] === newItem.name) {
             updateFlag = true;
-            projectData.env[i]['header'][j]['value'] = newItem.value;
+            if (newItem.name === 'Cookie') {
+              let currValue = projectData.env[i]['header'][j]['value'];
+              let arrayStr = currValue.split(';');
+              let newValue= ''
+              for (let i = 0; i < arrayStr.length; i++) {
+                if(!arrayStr[i].includes(newItem.value.split('=')[0])) {
+                  newValue += arrayStr[i] + ';'
+                }
+              }
+              newValue += newItem.value
+              yapi.commons.log('当前cookie:' + newValue)
+              projectData.env[i]['header'][j]['value'] = newValue;
+            } else {
+              projectData.env[i]['header'][j]['value'] = newItem.value;
+            }
             break;
           }
         }
