@@ -113,6 +113,11 @@ node server/app.js
   - 比如你要获取请求体里面的内容，就是 `data.xxx`，记得以 `data` 开头获取请求体内容
   - 如果是获取 `header` 的内容请使用 `header.yyy`，可以使用 `+` 作为连接符
   - 获取返回结果中的内容请使用 `body.xxx`
+- 配置Cookie
+  - 请求头字段：Cookie
+  - 获取路径
+    - myToken= + header.token
+    - 将会从header的token字段映射到请求的cookie的myToken： yapi页面展示： name=token  value= ${token.value}
 
 ---
 
