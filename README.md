@@ -117,7 +117,7 @@ node server/app.js
   - 请求头字段：Cookie
   - 获取路径
     - myToken= + header.token
-    - 将会从header的token字段映射到请求的cookie的myToken： yapi页面展示： name=token  value= ${token.value}
+    - 将会从header的token字段映射到请求的cookie的myToken： yapi页面展示： name=myToken  value= ${token.value}
 
 ---
 
